@@ -1,0 +1,7 @@
+.content
+    .well
+        h1 {{question.text}}
+    .well
+        .row
+            .col-lg-2(ng-repeat="player in players")
+                .btn.btn-block(ng-class="isReady(player.name) ? 'btn-success' : 'btn-default'") {{player.name}}

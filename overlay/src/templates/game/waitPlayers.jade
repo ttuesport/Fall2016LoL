@@ -1,0 +1,8 @@
+.content
+    .well.text-center
+        i.fa.fa-4x.fa-cog.fa-spin
+        h3 Waiting for players to join...
+    .well.text-center
+        .row
+            .col-lg-2(ng-repeat="player in players")
+                .btn.btn-block.btn-success {{player.name}}

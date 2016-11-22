@@ -1,0 +1,54 @@
+{
+  "startData": {
+    "currentGame": {
+      "teams": {
+        "blue": {
+          "name": "Blue Team",
+          "score": 0
+
+        },
+        "red": {
+          "name": "Red Team",
+          "score": 0
+        }
+      },
+      "numberOfGames": {
+        "total": 3,
+        "played": 1,
+        "left": 2
+      }
+    },
+    "casters": [
+      "Stewie Griffin",
+      "Marge Simpson",
+      "Philip J. Fry"
+    ],
+    "afkMessage": {
+      "title": "I'll be back",
+      "text": "Technical difficulties, please stand by!"
+    },
+    "sponsorImages": [
+      "ityn.png",
+      "tut.png",
+      "redbull.png"
+    ],
+    "timetable": [
+      {
+        "time": "19:00",
+        "event": "End of the World"
+      },
+      {
+        "time": "23:00",
+        "event": "Free Snacks"
+      },
+      {
+        "time": "03:00",
+        "event": "Underwater Basket Weaving Contest"
+      },
+      {
+        "time": "11:00",
+        "event": "Coffee Making Workshop"
+      }
+    ]
+  }
+}
