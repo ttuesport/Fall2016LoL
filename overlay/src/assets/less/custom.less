@@ -145,13 +145,17 @@ html, body, .main-container {
   width: 400px;
   transition: all 0.2s ease-out;
   &.caster-left {
+    background-image: url('../img/card.bg.png');
     text-align: right;
+    left: 0;
     &.loading {
       transform: translateX(-100%);
     }
   }
   &.caster-right {
+    background-image: url('../img/card.bg.inv.png');
     text-align: left;
+    right: 0;
     &.loading {
       transform: translateX(100%);
     }
