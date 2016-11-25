@@ -1,14 +1,164 @@
 .container
     .row
         .col-xs-12
-            .panel.panel-primary
+            .panel.panel-default
                 .panel-heading View
                 .panel-body
-                    .btn.btn-default Game
-                    .btn.btn-default Casters
-                    .btn.btn-default Hallcam (upper)
-                    .btn.btn-default Hallcam (stage)
-                    .btn.btn-primary Champion Select
-                    .btn.btn-default Teams
-                    .btn.btn-default Brackets
-                    .btn.btn-default Timetable
+                    button.btn(ng-repeat="view in views"
+                            ng-class="activeView.id === view.id ? 'btn-primary' : 'btn-default'"
+                            ng-click="setView(view)") {{view.name}}
+                    p.text-primary {{state}}
+    .row
+        .col-xs-12.col-sm-6
+            .panel.panel-primary
+                .panel-heading Blue Team
+                .panel-body
+                    .form-group
+                        label.control-label Team Name
+                        input.form-control(ng-model="unsaved.teams.blue.name")
+                    .form-group
+                        label.control-label Team Score
+                        input.form-control(ng-model="unsaved.teams.blue.score" type="number")
+                    button.btn.btn-xs.btn-primary(ng-click="expandTeams = true" ng-show="!expandTeams") Expand
+                    button.btn.btn-xs.btn-primary(ng-click="expandTeams = false" ng-show="expandTeams") Collapse
+                    .row(ng-show="expandTeams")
+                        .col-xs-6
+                            .form-group
+                                label.control-label Nickname
+                        .col-xs-6
+                            .form-group
+                                label.control-label Real Name
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.blue.players[0].nick")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.blue.players[0].realName")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.blue.players[1].nick")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.blue.players[1].realName")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.blue.players[2].nick")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.blue.players[2].realName")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.blue.players[3].nick")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.blue.players[3].realName")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.blue.players[4].nick")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.blue.players[4].realName")
+        .col-xs-12.col-sm-6
+            .panel.panel-danger
+                .panel-heading Red Team
+                .panel-body
+                    .form-group
+                        label.control-label Team Name
+                        input.form-control(ng-model="unsaved.teams.red.name")
+                    .form-group
+                        label.control-label Team Score
+                        input.form-control(ng-model="unsaved.teams.red.score" type="number")
+                    button.btn.btn-xs.btn-primary(ng-click="expandTeams = true" ng-show="!expandTeams") Expand
+                    button.btn.btn-xs.btn-primary(ng-click="expandTeams = false" ng-show="expandTeams") Collapse
+                    .row(ng-show="expandTeams")
+                        .col-xs-6
+                            .form-group
+                                label.control-label Nickname
+                        .col-xs-6
+                            .form-group
+                                label.control-label Real Name
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.red.players[0].nick")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.red.players[0].realName")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.red.players[1].nick")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.red.players[1].realName")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.red.players[2].nick")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.red.players[2].realName")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.red.players[3].nick")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.red.players[3].realName")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.red.players[4].nick")
+                        .col-xs-6
+                            .form-group
+                                input.form-control(ng-model="unsaved.teams.red.players[4].realName")
+    .row
+        .col-xs-12.col-sm-6
+            .panel.panel-default
+                .panel-heading Games
+                .panel-body
+                    .form-group
+                        label.control-label Number of Games
+                        input.form-control(ng-model="unsaved.numberOfGames" type="number")
+        .col-xs-12.col-sm-6
+            .panel.panel-default
+                .panel-heading AFK Message
+                .panel-body
+                    .form-group
+                        label.control-label Title
+                        input.form-control(ng-model="unsaved.afkMessage.title")
+                    .form-group
+                        label.control-label Text
+                        input.form-control(ng-model="unsaved.afkMessage.text")
+    .row
+        .col-xs-12
+            .panel.panel-default
+                .panel-heading Timetable
+                .panel-body
+                    .row.form-group
+                        .col-xs-5
+                            label.control-label Time
+                        .col-xs-6
+                            label.control-label Event
+                    .row.form-group(ng-repeat="row in unsaved.timetable track by $index")
+                        .col-xs-5
+                            input.form-control(ng-model="row.time")
+                        .col-xs-6
+                            input.form-control(ng-model="row.event")
+                        .col-xs-1
+                            button.btn.btn-danger.btn-sm(ng-click="unsaved.timetable.splice($index, 1)") x
+                    .row
+                        .text-center
+                            button.btn.btn-success(ng-click="unsaved.timetable.push({time: '', event: ''})") Add
+    .row
+        .col-xs-12.col-sm-6
+            .panel.panel-default
+                .panel-heading Left Caster
+                .panel-body
+                    .form-group
+                        label.control-label Name
+                        input.form-control(ng-model="unsaved.casters.left")
+        .col-xs-12.col-sm-6
+            .panel.panel-default
+                .panel-heading Right Caster
+                .panel-body
+                    .form-group
+                        label.control-label Name
+                        input.form-control(ng-model="unsaved.casters.right")
+
+button.btn.btn-success.btn-save(ng-click="save()" ng-disabled="working") Save

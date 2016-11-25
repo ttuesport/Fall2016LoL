@@ -1,28 +1,64 @@
 {
   "startData": {
-    "currentGame": {
-      "teams": {
-        "blue": {
-          "name": "Blue Team",
-          "score": 0
-
-        },
-        "red": {
-          "name": "Red Team",
-          "score": 0
-        }
+    "teams": {
+      "blue": {
+        "name": "Blue Team",
+        "score": 0,
+        "players": [
+          {
+            "nick": "",
+            "realName": ""
+          },
+          {
+            "nick": "",
+            "realName": ""
+          },
+          {
+            "nick": "",
+            "realName": ""
+          },
+          {
+            "nick": "",
+            "realName": ""
+          },
+          {
+            "nick": "",
+            "realName": ""
+          }
+        ]
       },
-      "numberOfGames": {
-        "total": 3,
-        "played": 1,
-        "left": 2
+      "red": {
+        "name": "Red Team",
+        "score": 0,
+        "players": [
+          {
+            "nick": "",
+            "realName": ""
+          },
+          {
+            "nick": "",
+            "realName": ""
+          },
+          {
+            "nick": "",
+            "realName": ""
+          },
+          {
+            "nick": "",
+            "realName": ""
+          },
+          {
+            "nick": "",
+            "realName": ""
+          }
+        ]
       }
     },
-    "casters": [
-      "Stewie Griffin",
-      "Marge Simpson",
-      "Philip J. Fry"
-    ],
+    "numberOfGames": 3,
+    "casters": {
+      "left": "Peter Griffin",
+      "right": "Louis Griffin"
+    },
     "afkMessage": {
       "title": "I'll be back",
       "text": "Technical difficulties, please stand by!"
@@ -50,5 +86,31 @@
         "event": "Coffee Making Workshop"
       }
     ]
-  }
+  },
+  "views": [
+    {
+      "id": "afkPic",
+      "name": "AFK with Picture BG",
+      "scene": "backdrop",
+      "overlay": "afk"
+    },
+    {
+      "id": "afkHallcam",
+      "name": "AFK with Hallcam",
+      "scene": "hallcam",
+      "overlay": "afk"
+    },
+    {
+      "id": "timetableHallcam",
+      "name": "Timetable with Hallcam",
+      "scene": "hallcam",
+      "overlay": "timetable"
+    },
+    {
+      "id": "inGame",
+      "name": "In Game",
+      "scene": "game",
+      "overlay": "ingame"
+    }
+  ]
 }

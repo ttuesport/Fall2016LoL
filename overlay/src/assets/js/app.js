@@ -1,6 +1,6 @@
 // Environment variables
 
-socketBase = "localhost:3000";
+socketBase = "10.0.24.48:3000";
 
 var app = angular.module("esport16FallLoLOverlay", [
     "ui.router",
@@ -8,54 +8,60 @@ var app = angular.module("esport16FallLoLOverlay", [
     "angular-storage",
     'ui.bootstrap',
     'btford.socket-io'
-]).run(function($rootScope, $state, $stateParams, store, socketService) {
+]).run(function($rootScope, $state, $stateParams, store, socketService, $interval) {
+    $rootScope.inGame = false;
+    $rootScope.data = null;
+    $rootScope.state = null;
+    $rootScope.activeView = null;
+    $rootScope.views = null;
     $rootScope.socket = socketService;
-    $rootScope.players = [];
-    $rootScope.playersReady = [];
-    $rootScope.socket.on("gameStatus", function(viewName) {
-        if(viewName == "writeAnswer") $state.go("game.write");
-        else if(viewName == "guessAnswer") $state.go("game.guess");
-        else if(viewName == "waitPlayers") $state.go("game.wait");
-        $rootScope.playersReady = [];
+    $rootScope.socket.on("getAll", function(response) {
+        $rootScope.data = response.data;
+        $rootScope.state = response.state;
+        $rootScope.activeView = response.activeView;
+        $rootScope.views = response.views;
     });
-    $rootScope.socket.on("answers", function(answers) {
-        $rootScope.answers = answers;
+    $rootScope.socket.on("data", function(payload) {
+        $rootScope.data = payload;
     });
-    $rootScope.socket.on("question", function(question) {
-        $rootScope.question = question;
+    $rootScope.socket.on("view", function(view) {
+        $rootScope.activeView = view;
+        $state.go(view.overlay, {}, {reload: true});
     });
-    $rootScope.socket.on("players", function(players) {
-        $rootScope.players = players;
-    });
-    $rootScope.socket.on("playerReady", function(player) {
-        $rootScope.playersReady.push(player);
-    });
+    $rootScope.socket.emit('getAll', null);
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
-
+    $rootScope.sponsorLogos = [
+        "arvutitark.png", "aula.png", "euronics.svg", "fifaa.png", "ittk.png", "ityn.png", "lux.png",
+        "nt.png", "playfair.svg", "redbull.png", "thorgate.svg"
+    ];
+    $rootScope.logoIndex = 0;
+    $rootScope.sponsorLogo = $rootScope.sponsorLogos[0];
+    $interval(function() {
+        if($rootScope.logoIndex - 2 == $rootScope.sponsorLogos.length) {
+            $rootScope.logoIndex = 0;
+        } else {
+            $rootScope.logoIndex++;
+        }
+        $rootScope.sponsorLogo = $rootScope.sponsorLogos[$rootScope.logoIndex];
+    }, 10000);
 }).config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider
-        .otherwise("/game/wait");
+        .otherwise("/afk");
     $stateProvider
-        .state("game", {
-            url: "/game",
-            abstract: true,
+        .state("afk", {
+            url: "/afk",
+            templateUrl: "templates/afk.html",
+            controller: "afkController"
+        })
+        .state("timetable", {
+            url: "/timetable",
+            templateUrl: "templates/timetable.html",
+            controller: "timetableController"
+        })
+        .state("ingame", {
+            url: "/ingame",
             templateUrl: "templates/game.html",
-            controller: "gameController",
-            data: {
-                requiresName: true
-            }
-        })
-        .state("game.wait", {
-            url: "/wait",
-            templateUrl: "templates/game/waitPlayers.html"
-        })
-        .state("game.write", {
-            url: "/write",
-            templateUrl: "templates/game/writeAnswer.html"
-        })
-        .state("game.guess", {
-            url: "/guess",
-            templateUrl: "templates/game/guessAnswer.html"
+            controller: "gameController"
         })
 });

@@ -3,10 +3,15 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require("fs");
 var clk = require("chalk");
+var OBSRemote = require('obs-remote');
 var config = JSON.parse(fs.readFileSync("config.json"));
 var overlayers = [];
 var state = "ANIMATE_IN_FINISHED";
 var data = config.startData;
+var activeView = config.views[0];
+var views = config.views;
+var obs = new OBSRemote();
+obs.connect('localhost');
 
 io.on('connection', function(socket) {
     console.log(clk.green.underline.bold(socket.handshake.address) + clk.green(" has connected"));
@@ -26,21 +31,33 @@ io.on('connection', function(socket) {
                     clk.green.bold("overlayer"))
         }
     });
-    socket.on('animationState', function(newState) {
+    socket.on('state', function(newState) {
         state = newState;
         io.emit("state", state);
+        if(state == "ANIMATE_OUT_FINISHED") {
+            obs.setCurrentScene(activeView.scene);
+            setTimeout(function () {
+                io.emit("view", activeView);
+            }, 300);
+        }
     });
-    socket.on('getAll', function(name) {
+    socket.on('getAll', function() {
         socket.emit('getAll', {
             state: state,
-            config: config,
+            activeView: activeView,
+            views: views,
             data: data
         })
     });
-    socket.on('addAnswer', function(obj) {
-        io.emit("playerReady", obj.player);
-        answers.push(obj);
-        console.log("Player " + obj.player + " added answer: " + obj.answer);
+    socket.on('view', function(view) {
+        io.emit('animateOut',activeView);
+        activeView = view;
+        console.log(clk.blue("Next view set to " + view.name));
+    });
+    socket.on('save', function(payload) {
+        data = payload;
+        console.log(clk.blue("Updates retrieved"));
+        io.emit("data", data);
     });
 });
 

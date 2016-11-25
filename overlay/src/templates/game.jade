@@ -1,1 +1,7 @@
-.center-flex.container-fluid(ui-view)
+.full-container
+    .blue-team.ig-team-card
+        h2 {{data.teams.blue.name}} #[strong {{data.teams.blue.score}}]
+    .red-team.ig-team-card
+        h2 #[strong {{data.teams.red.score}}] {{data.teams.red.name}}
+    .ig-sponsor-box
+        img(src="{{logo}}" ng-src="{{logo}}")

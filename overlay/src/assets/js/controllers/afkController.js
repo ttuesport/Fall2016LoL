@@ -1,33 +1,34 @@
-app.controller("gameController", ["$q", "$scope", "$stateParams", "store", "socketService", "$rootScope", "$timeout",
+app.controller("afkController", ["$q", "$scope", "$stateParams", "store", "socketService", "$rootScope", "$timeout",
     function($q, $scope, $stateParams, store, socketService, $rootScope, $timeout) {
         $scope.data = $rootScope.data;
         
         $scope.animateIn = function() {
             $timeout(function() {
-                $('.blue-team').removeClass('loading');
+                $('.afk-card').removeClass('loading');
             }, 0);
             $timeout(function() {
-                $('.red-team').removeClass('loading');
-            }, 150);
+                $('.game-logo-container').removeClass('loading');
+            }, 200);
+            $timeout(function() {
+                $('.lol').removeClass('loading');
+            }, 500);
+            return $timeout(function() {}, 800);
         };
 
         $scope.animateOut = function() {
             $timeout(function() {
-                $('.red-team').addClass('loading');
+                $('.lol').addClass('loading');
             }, 0);
             $timeout(function() {
-                $('.blue-team').addClass('loading');
-            }, 150);
+                $('.game-logo-container').addClass('loading');
+            }, 100);
+            $timeout(function() {
+                $('.afk-card').addClass('loading');
+            }, 250);
             return $timeout(function() {
                 $rootScope.socket.emit('state', 'ANIMATE_OUT_FINISHED')
-            }, 350);
+            }, 400);
         };
-
-        $scope.$watch(function() {
-            return $rootScope.sponsorLogo;
-        }, function() {
-            $scope.logo = "assets/img/" + $rootScope.sponsorLogo;
-        }, true);
 
         $scope.$watch(function() {
             return $rootScope.data;
@@ -36,7 +37,7 @@ app.controller("gameController", ["$q", "$scope", "$stateParams", "store", "sock
         }, true);
 
         $rootScope.socket.on("animateOut", function() {
-            if($rootScope.activeView.overlay == "ingame") $scope.animateOut();
+            if($rootScope.activeView.overlay == "afk") $scope.animateOut();
         });
 
         $scope.animateIn();

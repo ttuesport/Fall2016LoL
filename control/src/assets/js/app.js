@@ -1,8 +1,8 @@
 // Environment variables
 
-apiBase = "http://private-d5ebba-fundingsystem.apiary-mock.com";
+socketBase = "10.0.24.48:3000";
 
-var app = angular.module("esport16FallLoLOverlay", [
+var app = angular.module("esport16FallLoLControl", [
     "ui.router",
     "ui.utils",
     "angular-storage",
@@ -10,16 +10,27 @@ var app = angular.module("esport16FallLoLOverlay", [
     'btford.socket-io'
 ]).run(function($rootScope, $state, $stateParams, store, socketService) {
     $rootScope.inGame = false;
+    $rootScope.data = null;
+    $rootScope.state = null;
+    $rootScope.activeView = null;
+    $rootScope.views = null;
     $rootScope.socket = socketService;
-    $rootScope.socket.on("gameStatus", function(viewName) {
-        if(viewName == "writeAnswer") $state.go("game.write");
-        else if(viewName == "guessAnswer") $state.go("game.guess")
+    $rootScope.socket.on("getAll", function(response) {
+        $rootScope.data = response.data;
+        $rootScope.state = response.state;
+        $rootScope.activeView = response.activeView;
+        $rootScope.views = response.views;
     });
-    $rootScope.socket.on("answers", function(answers) {
-        $rootScope.answers = answers;
+    $rootScope.socket.on("data", function(payload) {
+        $rootScope.data = payload;
     });
+    $rootScope.socket.on("view", function(viewId) {
+        $rootScope.activeView = viewId;
+    });
+    $rootScope.socket.emit('getAll', null);
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
+    
 
 }).config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider
