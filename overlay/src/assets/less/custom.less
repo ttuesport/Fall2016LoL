@@ -5,8 +5,6 @@ html, body, .main-container {
   color: #f1f1f1;
 }
 .main-container {
-  background-color: #000;
-  background: url('http://puu.sh/stJYV/8d82e26fd3.png');
 }
 .center-flex {
   display:flex;
@@ -140,4 +138,22 @@ html, body, .main-container {
 .full-container {
   height: 1920px;
   width: 1080px;
+}
+.casters {
+  position: absolute;
+  bottom: 100px;
+  width: 400px;
+  transition: all 0.2s ease-out;
+  &.caster-left {
+    text-align: right;
+    &.loading {
+      transform: translateX(-100%);
+    }
+  }
+  &.caster-right {
+    text-align: left;
+    &.loading {
+      transform: translateX(100%);
+    }
+  }
 }

@@ -97,13 +97,13 @@
     {
       "id": "afkHallcam",
       "name": "AFK with Hallcam",
-      "scene": "hallcam",
+      "scene": "capture",
       "overlay": "afk"
     },
     {
       "id": "timetableHallcam",
       "name": "Timetable with Hallcam",
-      "scene": "hallcam",
+      "scene": "capture",
       "overlay": "timetable"
     },
     {
@@ -111,6 +111,12 @@
       "name": "In Game",
       "scene": "game",
       "overlay": "ingame"
+    },
+    {
+      "id": "casters",
+      "name": "Casters",
+      "scene": "capture",
+      "overlay": "casters"
     }
   ]
 }

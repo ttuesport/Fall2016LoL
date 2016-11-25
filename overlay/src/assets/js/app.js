@@ -64,4 +64,9 @@ var app = angular.module("esport16FallLoLOverlay", [
             templateUrl: "templates/game.html",
             controller: "gameController"
         })
+        .state("casters", {
+            url: "/casters",
+            templateUrl: "templates/casters.html",
+            controller: "castersController"
+        })
 });

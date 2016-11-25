@@ -11,7 +11,7 @@ var data = config.startData;
 var activeView = config.views[0];
 var views = config.views;
 var obs = new OBSRemote();
-obs.connect('localhost');
+obs.connect('10.0.23.127');
 
 io.on('connection', function(socket) {
     console.log(clk.green.underline.bold(socket.handshake.address) + clk.green(" has connected"));
