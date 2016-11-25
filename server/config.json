@@ -107,6 +107,12 @@
       "overlay": "timetable"
     },
     {
+      "id": "timetableBackdrop",
+      "name": "Timetable with Backdrop",
+      "scene": "backdrop",
+      "overlay": "timetable"
+    },
+    {
       "id": "inGame",
       "name": "In Game",
       "scene": "game",
